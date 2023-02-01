@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'time'
-require_relative 'not_found'
+require_relative 'time_controller'
+
+ROUTES = {
+  '/time' => TimeController.new
+}.freeze
 
 use Rack::Reloader
+use Rack::ContentType, 'text/plain'
 
-map '/time/' do
-  run Time.new
-end
-
-run NotFound.new
+run Rack::URLMap.new(ROUTES)
